@@ -1,0 +1,175 @@
+body {
+  background-color: #f2e8ee;
+  color: rgb(39, 39, 80);
+  font-family: 'Noto Sans HK', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  padding: 40px 0px 10px;
+  font-family: 'Overpass Mono', monospace;
+}
+
+h2 {
+  text-align: center;
+  padding: 10px 0px 10px;
+  font-family: 'Overpass Mono', monospace;
+}
+
+#VisualizerContainer, #QueryContainer {
+  background-color: white;
+  border: 1px solid blue;
+  padding: 20px 30px;
+  box-shadow: 5px 10px rgb(39, 39, 80);
+  width: 460px;
+  margin: 40px auto;
+}
+
+#VisualizerContainer {
+  width: 700px;
+}
+
+#ButtonContainer {
+  text-align: center;
+}
+
+button {
+  background-color: #4286f4;
+  border: 1px solid #4286f4;
+  color: white;
+  padding: 0px 16px;
+  margin: 0px 5px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.2s;
+}
+button:hover {
+  background-color: blue;
+  border-color: white;
+}
+
+td {
+  padding: 5px 10px;
+}
+
+tr {
+  padding: 60px 0px;
+}
+
+.Person {
+  text-align: center;
+  margin: 20px 2px;
+  display: inline-block;
+  position: relative;
+}
+.PersonContainer {
+  position: absolute;
+  bottom: 0;
+  margin: 0px auto;
+  left: 0px;
+  right: 0px;
+}
+
+/* BEGIN: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_circles */
+.head {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  margin: 4px auto;
+}
+/* END: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_circles */
+
+.body {
+  margin: 0px auto;
+}
+
+#edit_stid, #add_stid {
+  border: 0px;
+}
+
+/* BEGIN: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_tooltip */
+.Person .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(39, 39, 80);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.Person .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgb(39, 39, 80) transparent transparent transparent;
+}
+
+.Person:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+/* END: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_tooltip */
+
+
+#attribution {
+  text-align: center;
+  color: white;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+/* Modal BEGIN: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal */
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal END: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal */

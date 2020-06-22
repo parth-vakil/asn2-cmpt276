@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+  <h1>People Visualizer</h1>
+  <div id="ButtonContainer">
+    <button id="myBtn" onclick="openAddPerson()"><h5>Add new Person</h5></button>
+    <button onclick="openEditPerson()"><h5>Edit/Delete Person</h5></button>
+  </div>
+
+
+  <div id="VisualizerContainer">
+    <div id="displayResults">
+      <% results.forEach(function(r) { %>
+        <div class="Person" style="height:90px; width: 60px">
+          <div class="PersonContainer">
+            <div class="body" style="width:<%= (r.size / 300) * 60 %>px; height:<%= (r.height / 210) * 60 %>px; background-color: <%= r.type == 'a' ? 'blue' : r.type == 'b' ? 'red' : 'gold' %>"></div>
+          </div>
+           <span class="tooltiptext"><%= r.name %> <%= r.size %><br/>Height: <%= r.height %><br/>Type: <%= r.type %></span>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+  <br />
+  <form action="/sortPersonData" id="SortPerson" method="POST">
+    <div style="text-align: center; margin: 0px auto;">
+      Sort Persons by
+      <select name="PersonSort" required>
+        <option value="name">Name</option>
+        <option value="size">Size</option>
+        <option value="height">Height</option>
+        <option value="Type">Type</option>
+      </select>
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+
+  <!-- The Modal -->
+  <div id="EditPersonModal" class="modal">
+      <!-- Modal content -->
+      <div id="QueryContainer" class="modal-content">
+        <span class="close" onclick="closeEditPerson()">&times;</span>
+          <h2>Edit a Person</h2>
+          <table>
+            <tr>
+              <td>Edit a Person:</td>
+              <td>
+                <select id="selectEditPerson" name="aPerson" onchange="updateEditPersonForm()">
+                  <option></option>
+                  <% results.forEach(function(r) { %>
+                    <option
+                      id="<%= r.name %>"
+                      value="<%= r.name %>"
+                      data-personName="<%= r.name %>"
+                      data-personSize="<%= r.size %>"
+                      data-personHeight="<%= r.height %>"
+                      data-personType="<%= r.type %>"
+                      ><%= r.name %> <%= r.size %> <%= r.height %></option>
+                  <% }); %>
+                </select>
+              </td>
+            </tr>
+          </table>
+          <form action="/editPersonData" id="EditPerson" method="POST">
+            <table>
+              <!-- Fill Form with Data -->
+              <tr>
+                <td>Name:</td>
+                <td><input id="edit_name" type="text" placeholder="Name" name="name" maxlength="30" required></td>
+              </tr>
+                <td>Height:</td>
+                <td><input id="edit_size" type="number" name="size" min="0" max="300" required> lbs</td>
+              </tr>
+              <tr>
+                <td>Size:</td>
+                <td><input id="edit_height" type="number" name="height" min="0" max="210" required> cm</td>
+              </tr>
+              <tr>
+                <!-- A or B -->
+                <td>Type:</td>
+                <td>
+                  <input id="edit_type_a" type="radio" name="type" value="a" checked>A </input>
+                  <input id="edit_type_b" type="radio" name="type" value="b">B</input>
+                </td>
+              </tr>
+              <tr>
+                <td><br/>Delete Person?</td><td><br/><input type="checkbox" name="willDelete" value="true" onclick="window.alert('Deleting a Person be undone.')"></td><br>
+              </tr>
+            </table>
+            <br/>
+            <div style="text-align: center"><input type="submit" value="Submit"></div>
+          </form>
+      </div>
+    </div>
+
+
+  <!-- The Modal -->
+  <div id="AddPersonModal" class="modal">
+    <!-- Modal content -->
+    <div id="QueryContainer" class="modal-content">
+      <span class="close" onclick="closeAddPerson()">&times;</span>
+      <h2>Add new Person</h2>
+      <form action="/addPersonData" id="AddPerson" method="POST">
+        <table>
+          <!-- <input type="number" name="stid"> -->
+          <tr><td><br/>Name:</td><td><br/><input type="text" placeholder="First Name" name="name" maxlength="30" required></td></tr>
+          <tr><td>Size:</td><td><input type="number" name="size" min="0" max="300" required> lbs</td></tr>
+          <tr><td>Height:</td><td><input type="number" name="height" min="0" max="210"  required> cm</td></tr>
+          <tr>
+            <!-- Male or Female -->
+            <td>Type:</td>
+            <td>
+              <input type="radio" name="type" value="a" checked>A </input>
+              <input type="radio" name="type" value="b">b</input>
+            </td>
+          </tr>
+        </table>
+        <br />
+        <div style="text-align: center"><input type="submit" value="Submit"></div>
+      </form>
+    </div>
+
+  </div>
+
+  <div id="attribution">Parth Vakil</div>
+  <script>
+    // Modal BEGIN: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
+
+    var addPersonModal = document.getElementById("AddPersonModal");
+    var editPersonModal = document.getElementById("EditPersonModal");
+
+    // When the user clicks the button, open the modal
+    openAddPerson = () => addPersonModal.style.display = "block";
+    openEditPerson = () => editPersonModal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    closeAddPerson = () => addPersonModal.style.display = "none";
+    closeEditPerson = () => editPersonModal.style.display = "none";
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == addPersonModal) closeAddPerson();
+      if (event.target == editPersonModal) closeEditPerson();
+    }
+
+    // Modal END: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
+
+    function getEditPersonAttributeValue(attribute) {
+      return document.getElementById(document.getElementById("selectEditPerson").value).getAttribute(attribute);
+    }
+
+    function updateEditPersonForm() {
+      var editPersonAttribtues = [
+        'data-personName',
+        'data-personSize',
+        'data-personHeight',
+        'data-personType',
+      ];
+
+      var PersonAttributes = [
+        'name',
+        'size',
+        'height',
+        'type',
+      ];
+
+      const EDIT_PREFIX = "edit_";
+      const EDIT_TYPE_PREFIX = "edit_type_"
+
+      PersonAttributes.forEach((attribute, idx) => {
+          document.getElementById(EDIT_PREFIX  + attribute).value = getEditPersonAttributeValue(editPersonAttribtues[idx]);
+      });
+
+      // Set the type of the person
+      var personType = getEditPersonAttributeValue('data-personType');
+      document.getElementById(EDIT_TYPE_PREFIX + 'a').checked = false;
+      document.getElementById(EDIT_TYPE_PREFIX + personType).checked = true;
+
+    }
+
+  </script>
+
+</body>
+</html>
